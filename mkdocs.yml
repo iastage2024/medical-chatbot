@@ -1,0 +1,74 @@
+site_name: Medical Chatbot – Documentation
+site_description: Tutoriel complet pour un chatbot médical éducatif avec Flask, OpenAI et Google Cloud
+site_author: Joël Onana
+site_url: https://<ton-username>.github.io/medical-chatbot/
+
+repo_name: medical-chatbot
+repo_url: https://github.com/<ton-username>/medical-chatbot
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: fr
+  logo: assets/medical-icon.png
+  favicon: assets/favicon.ico
+
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
+    - search.highlight
+    - search.share
+
+  palette:
+    - scheme: default
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Mode sombre
+    - scheme: slate
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Mode clair
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - codehilite
+  - footnotes
+  - tables
+  - attr_list
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: false
+
+nav:
+  - Accueil: index.md
+  - Guide:
+      - Introduction: index.md
+  - Architecture:
+      - Structure du projet: index.md
+  - API:
+      - Endpoints REST: index.md
+  - Déploiement:
+      - Google Cloud Run (à venir): index.md
+  - Sécurité & conformité: index.md

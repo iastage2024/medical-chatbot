@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Assistant Médical</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="chat-container">
+    <header>
+        <h1>Assistant Médical</h1>
+        <p>Outil éducatif – ne remplace pas un médecin</p>
+    </header>
+
+    <div id="chat-box">
+        <div class="message bot">
+            <img src="https://cdn-icons-png.flaticon.com/512/387/387561.png" class="avatar">
+            Bonjour, décrivez vos symptômes.
+        </div>
+    </div>
+
+    <div class="typing" id="typing">👨‍⚕️ Le médecin écrit...</div>
+
+    <div class="input-area">
+        <textarea id="symptoms" placeholder="Ex : fièvre, toux, fatigue..."></textarea>
+        <button onclick="sendMessage()">Envoyer</button>
+    </div>
+</div>
+
+<script>
+async function sendMessage() {
+    const textarea = document.getElementById("symptoms");
+    const text = textarea.value.trim();
+    if (!text) return;
+
+    addMessage(text, "user");
+    textarea.value = "";
+    showTyping(true);
+
+    const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ symptoms: text })
+    });
+
+    const data = await response.json();
+    showTyping(false);
+    addMessage(data.response, "bot");
+}
+
+function addMessage(text, sender) {
+    const chatBox = document.getElementById("chat-box");
+    const message = document.createElement("div");
+    message.className = `message ${sender}`;
+
+    if (sender === "bot") {
+        message.innerHTML =
+            `<img src="https://cdn-icons-png.flaticon.com/512/387/387561.png" class="avatar"> ${text}`;
+    }
+
+    chatBox.appendChild(message);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function showTyping(show) {
+    document.getElementById("typing").style.display = show ? "block" : "none";
+}
+</script>
+
+</body>
+</html>
